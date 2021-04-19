@@ -28,7 +28,7 @@ public class IndexController extends HttpServlet {
 		}
 		int rowPerPage = 15;
 		int beginRow = (currentPage-1)*rowPerPage;
-		System.out.printf("curretnPage:%d, beginRow:%d", currentPage, beginRow);
+		System.out.printf("curretnPage:%d, beginRow:%d \n", currentPage, beginRow);
 		// model 호출
 		// 베스트 ebook
 		this.ordersDao = new OrdersDao();
@@ -37,9 +37,14 @@ public class IndexController extends HttpServlet {
 		this.ebookDao = new EbookDao();
 		List<Ebook> ebookList = this.ebookDao.selectEbookListByPage(beginRow, rowPerPage);
 		
+		// 살수있는 ebook
+		this.ebookDao = new EbookDao();
+		List<Ebook> ebookCanBuyList = this.ebookDao.selectEbookListByPage(beginRow, rowPerPage, "판매중");
+		
 		// View forward
 		request.setAttribute("bestOrdersList", bestOrdersList);
 		request.setAttribute("ebookList", ebookList);
+		request.setAttribute("ebookCanBuyList", ebookCanBuyList);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/index.jsp");
 		rd.forward(request, response);
 	}

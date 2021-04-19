@@ -22,9 +22,10 @@
 	<%
 		List<Map<String, Object>> bestOrdersList = (List<Map<String, Object>>)(request.getAttribute("bestOrdersList"));
 		List<Ebook> ebookList = (List<Ebook>)(request.getAttribute("ebookList"));
+		List<Ebook> ebookCanByList = (List<Ebook>)(request.getAttribute("ebookCanBuyList"));
 	%>
 	
-	<!-- best ebook 상품5개 출력 -->
+	<!-- 구매 순서의 best ebook 상품5개 출력 -->
 	<h3>Best Ebook</h3>
 	<table border="1">
 		<tr>
@@ -48,7 +49,40 @@
 		</tr>
 	</table>
 	
+	<!-- 구매가능한 category weight값 순서의 ebook 상품 출력 -->
+	<h3>구매가능한 Ebook List</h3>
+	<table border="1">
+		<tr>
+		<%
+			int ii = 0;
+			for(Ebook ebook : ebookList) {
+				ii += 1;
+		%>		
+				<td>
+					<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
+					
+					<!-- EbookOneController - EbookDao.selectEbookOne() - ebookOne.jsp -->
+					<div>
+						<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=ebook.getEbookNo()%>">
+							<%=ebook.getEbookTitle()%>
+						</a>
+					</div>
+					
+					<div>￦<%=ebook.getEbookPrice()%></div>
+				</td>
+		<%
+				if(ii%5==0) {
+		%>
+					</tr><tr>
+		<%			
+				}
+			}
+		%>
+		</tr>
+	</table>
+	
 	<!-- ebook 상품 출력 -->
+	<!-- 검색 -->
 	<h3>Ebook List</h3>
 	<table border="1">
 		<tr>
@@ -79,5 +113,7 @@
 		%>
 		</tr>
 	</table>
+	
+	
 </body>
 </html>

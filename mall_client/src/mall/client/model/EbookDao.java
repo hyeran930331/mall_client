@@ -76,6 +76,39 @@ public class EbookDao {
 		}
 		return ebook;
 	}
+	
+	public List<Ebook> selectEbookListByPage(int beginRow, int rowPerPage, String state) {
+		this.dbUtil = new DBUtil();
+		List<Ebook> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = this.dbUtil.getConnection();
+			String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook "
+					+ " WHERE ebook_state= %?% "
+					+ " ORDER BY ebook_date DESC "
+					+ " LIMIT ?, ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, state);
+			System.out.println("~~~~~state "+state);
+			stmt.setInt(2, beginRow);
+			stmt.setInt(3, rowPerPage);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Ebook ebook = new Ebook();
+				ebook.setEbookNo(rs.getInt("ebookNo"));
+				ebook.setEbookTitle(rs.getString("ebookTitle"));
+				ebook.setEbookPrice(rs.getInt("ebookPrice"));
+				list.add(ebook);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.dbUtil.close(rs, stmt, conn);
+		}
+		return list;
+	}
 
 	public List<Ebook> selectEbookListByPage(int beginRow, int rowPerPage) {
 		this.dbUtil = new DBUtil();
