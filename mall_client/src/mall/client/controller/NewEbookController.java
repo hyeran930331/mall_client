@@ -42,10 +42,12 @@ public class NewEbookController extends HttpServlet {
 		firstDay.set(Calendar.DATE, 1);
 		int firstDayOfWeek = firstDay.get(Calendar.DAY_OF_WEEK);
 		 
-		System.out.println(currentYear+" <--currentYear");
-		System.out.println(currentMonth+" <--currentMonth");
-		System.out.println(endDay+" <--endDay");
-		System.out.println(firstDayOfWeek + " <-- 4/1 목요일(5)");
+		System.out.print(currentYear+"년  ");
+		System.out.print(currentMonth+"월 ");
+		System.out.print(endDay+"일이 끝! ");
+		System.out.println("요일은("+ firstDayOfWeek + ") 일1 월2 화3 수4 목5 금6 토7");
+		System.out.println("앞에 있는 공백은 (일요인0 월요일1 화요일2 수요일3 목요일4 금요일5 토요일 6)");
+		System.out.println((endDay+firstDayOfWeek-1)+"-->"+(7-((endDay+firstDayOfWeek-1)%7))+" 만큼의 뒷 공백이 필요함");
 		
 		int preYear = currentYear;
 		int preMonth = currentMonth - 1;

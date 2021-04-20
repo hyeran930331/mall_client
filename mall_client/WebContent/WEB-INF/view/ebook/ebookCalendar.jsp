@@ -10,7 +10,7 @@
 <body>
 	<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
 	<h1>Ebook Calendar</h1>
-
+	
 
 	<!-- %List<Map<String, Object>> ebookListByMonth = (List<Map<String, Object>>)request.getAttribute("ebookListByMonth");% -->
 	<!--%int currentYear = (Integer) request.getAttribute("currentYear");%-->
@@ -37,8 +37,9 @@
 			<td>금</td>
 			<td>토</td>
 		</tr>
+		
 		<tr>
-			<c:forEach var="i" begin="1" step="1" end="${endDay}">
+			<c:forEach var="i" begin="1" step="1" end="${(endDay+(firstDayOfWeek-1))}">
 				<c:if test="${i-(firstDayOfWeek-1) <= 0}">
 					<td>&nbsp;</td> <!-- 앞에 공백. 요일숫자-1만큼 -->
 				</c:if>
@@ -46,11 +47,12 @@
 				<!-- 앞의 공백은 맞음 2:23 -->
 				
 				<c:if test="${i-(firstDayOfWeek-1) > 0}">
+				
 					<td>
 						${i-(firstDayOfWeek-1)} 
 						<c:forEach var="m" items="${ebookListByMonth}">
 							
-							<c:if test="$((i-(firstDayOfWeek-1)) == m.d)">
+							<c:if test="${((i-(firstDayOfWeek-1)) == m.d)}">
 								<div> 
 								<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${m.ebookNo}">
 								<c:if test="${m.ebookTitle.length() > 10}">
@@ -66,14 +68,17 @@
 					</td> <!-- 날짜숫자 출력 -->
 				</c:if>
 				
-				<c:if test="${i%7 == 0}">
+				<!-- 숫자는 다나옴 6:04 -->
+				
+				<c:if test="${ i!=0 && i%7==0 }">
+				<!-- 순서가 7번째이면서 순서가 0번째가 아닐때 줄을 바꾼다. -->
 					</tr><tr>
-				</c:if>
+				</c:if>	
 			</c:forEach>
 			
 			<!-- 마지막 tr 이 끝난후 -->
 			<c:if test="${(endDay+(firstDayOfWeek-1))%7 != 0}"> <!-- 뒤에 공백. -->
-				<c:forEach var="j" begin="1" step="1" end="${((endDay+(firstDayOfWeek-1))%7)-1}">
+				<c:forEach var="j" begin="1" step="1" end="${(7-((endDay+firstDayOfWeek-1)%7))}">
 					<td>&nbsp;</td>
 				</c:forEach>
 			</c:if>
