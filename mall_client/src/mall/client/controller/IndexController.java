@@ -45,6 +45,9 @@ public class IndexController extends HttpServlet {
 		request.setAttribute("bestOrdersList", bestOrdersList);
 		request.setAttribute("ebookList", ebookList);
 		request.setAttribute("ebookCanBuyList", ebookCanBuyList);
+		
+		request.setAttribute("rowPerPage", rowPerPage-2 );
+		request.setAttribute("bestOrdersListSize", bestOrdersList.size());
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/index.jsp");
 		rd.forward(request, response);
 	}

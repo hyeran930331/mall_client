@@ -32,7 +32,6 @@ public class NewEbookController extends HttpServlet {
 		int currentYear = dday.get(Calendar.YEAR);
 		int currentMonth = dday.get(Calendar.MONTH) + 1;
 		
-		
 		// 마지막 일( ex: 31, 30, 29, 28....)
 		int endDay = dday.getActualMaximum(Calendar.DAY_OF_MONTH);
 		
@@ -48,6 +47,21 @@ public class NewEbookController extends HttpServlet {
 		System.out.println(endDay+" <--endDay");
 		System.out.println(firstDayOfWeek + " <-- 4/1 목요일(5)");
 		
+		int preYear = currentYear;
+		int preMonth = currentMonth - 1;
+		if (preMonth == 0) {
+			preMonth = 12;
+			preYear -= 1;
+		}
+
+		int nextYear = currentYear;
+		int nextMonth = currentMonth + 1;
+		
+		if (nextMonth == 13) {
+			nextMonth = 1;
+			nextYear += 1;
+		}
+		
 		
 		List<Map<String, Object>> ebookListByMonth = this.ebookDao.selectEbookListByMonth(currentYear, currentMonth);
 		
@@ -55,6 +69,10 @@ public class NewEbookController extends HttpServlet {
 		request.setAttribute("currentYear", currentYear);
 		request.setAttribute("currentMonth", currentMonth);
 		request.setAttribute("endDay", endDay);
+		request.setAttribute("preYear", preYear);
+		request.setAttribute("preMonth", preMonth);
+		request.setAttribute("nextYear", nextYear);
+		request.setAttribute("nextMonth", nextMonth);
 		request.setAttribute("firstDayOfWeek", firstDayOfWeek);
 		request.getRequestDispatcher("/WEB-INF/view/ebook/ebookCalendar.jsp").forward(request, response);
 	}

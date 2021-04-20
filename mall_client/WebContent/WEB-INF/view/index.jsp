@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*" %>
 <%@ page import = "mall.client.vo.*" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,101 +20,106 @@
 	<!-- 캘린더 -->
 	
 	<h1>index</h1>
-	<%
-		List<Map<String, Object>> bestOrdersList = (List<Map<String, Object>>)(request.getAttribute("bestOrdersList"));
-		List<Ebook> ebookList = (List<Ebook>)(request.getAttribute("ebookList"));
-		List<Ebook> ebookCanByList = (List<Ebook>)(request.getAttribute("ebookCanBuyList"));
-	%>
 	
+	
+	
+
 	<!-- 구매 순서의 best ebook 상품5개 출력 -->
 	<h3>Best Ebook</h3>
 	<table border="1">
 		<tr>
-			<%
-				for(Map m : bestOrdersList) {
-			%>
+			<!-- % List<Map<String, Object>> bestOrdersList = (List<Map<String, Object>>)(request.getAttribute("bestOrdersList")); % -->
+			<!-- % for(Map m : bestOrdersList) { % -->
+			<c:forEach var="iii" begin="0" step="1" end="${bestOrdersListSize-1}">
 					<td>
-						<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
+						<div><img src="${pageContext.request.contextPath}/img/default.jpg"></div>
 						<!-- EbookOneController - EbookDao.selectEbookOne() - ebookOne.jsp -->
 						<div>
-							<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=m.get("ebookNo")%>">
-								<%=m.get("ebookTitle")%>
+							<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${bestOrdersList[iii].ebookNo}">
+								${bestOrdersList[iii].ebookTitle} <!-- %=m.get("ebookTitle")%-->
 							</a>
 						</div>
 						
-						<div>￦<%=m.get("ebookPrice")%></div>
+						<div> ${bestOrdersList[iii].ebookPrice} <!--%=m.get("ebookPrice")%--> </div>
 					</td>
-			<%		
-				}
-			%>
+			</c:forEach> <!--% } % -->
 		</tr>
 	</table>
-	
+
 	<!-- 구매가능한 category weight값 순서의 ebook 상품 출력 -->
+	<DIV>
 	<h3>구매가능한 Ebook List</h3>
 	<table border="1">
 		<tr>
-		<%
-			int ii = 0;
-			for(Ebook ebook : ebookList) {
-				ii += 1;
-		%>		
+		<!-- % List<Ebook> ebookCanBuyList = (List<Ebook>)(request.getAttribute("ebookCanBuyList")); % -->
+		<!-- % for(Ebook ebook : ebookCanBuyList) { %-->
+			<c:forEach var="ii" begin="0" step="1" end="${rowPerPage+1}"> <!-- % int ii = 0; %--> <!-- % ii += 1; %-->
 				<td>
-					<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
+					<div><img src="${pageContext.request.contextPath}/img/default.jpg"></div>
 					
 					<!-- EbookOneController - EbookDao.selectEbookOne() - ebookOne.jsp -->
 					<div>
-						<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=ebook.getEbookNo()%>">
-							<%=ebook.getEbookTitle()%>
+						<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${ebookCanBuyList[ii].ebookNo}">
+							${ebookCanBuyList[ii].ebookTitle} <!--%=ebook.getEbookTitle()%-->
 						</a>
 					</div>
 					
-					<div>￦<%=ebook.getEbookPrice()%></div>
+					<div>￦${ebookCanBuyList[ii].ebookPrice} <!-- %=ebook.getEbookPrice()% --></div>
 				</td>
-		<%
-				if(ii%5==0) {
-		%>
-					</tr><tr>
-		<%			
-				}
-			}
-		%>
+					
+					<c:if test="${ii !=0 && (ii+1)%5 ==0}"> <!--%if(ii%5==0) {-->
+								</tr><tr>	
+					</c:if> 
+			</c:forEach> <!--%	} }  %-->
 		</tr>
 	</table>
+	</DIV>
 	
 	<!-- ebook 상품 출력 -->
 	<!-- 검색 -->
+	<DIV>
 	<h3>Ebook List</h3>
+	<form action="${pageContext.request.contextPath}/IndexController?${selectOne}=${searchWord}">
+	검색 : 
+	<select>
+		<option>ebookNo</option>
+		<option>ebookISBN</option>
+		<option>ebookTitle</option>
+		<option>ebookPrice</option>
+	</select>
+	<input type="text" name="searchWord">
+	<button type="submit">검색</button>
+	</form>
 	<table border="1">
 		<tr>
-		<%
-			int i = 0;
-			for(Ebook ebook : ebookList) {
-				i += 1;
-		%>		
-				<td>
-					<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
-					
-					<!-- EbookOneController - EbookDao.selectEbookOne() - ebookOne.jsp -->
-					<div>
-						<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=ebook.getEbookNo()%>">
-							<%=ebook.getEbookTitle()%>
-						</a>
-					</div>
-					
-					<div>￦<%=ebook.getEbookPrice()%></div>
-				</td>
-		<%
-				if(i%5==0) {
-		%>
-					</tr><tr>
-		<%			
-				}
-			}
-		%>
+			<th>ebookNo</th>
+			<th>ebookISBN</th>
+			<th>ebookTitle</th>
+			<th>ebookEbookPrice</th>
+			<th>ebookDate</th>
+			<th>ebookState</th>
 		</tr>
-	</table>
 	
+		<c:forEach var="i" begin="0" step="1" end="${rowPerPage+1}"> <!-- % int ii = 0; %--> <!-- % ii += 1; %-->
+		<tr>
+			
+			<td>${ebookList[i].ebookNo}</td>
+			<td>${ebookList[i].ebookISBN}</td>
+			<td>
+				<!-- EbookOneController - EbookDao.selectEbookOne() - ebookOne.jsp -->
+					<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${ebookList[i].ebookNo}">
+						${ebookCanBuyList[i].ebookTitle} <!--%=ebook.getEbookTitle()%-->
+					</a>
+			</td>
+			<td> ￦${ebookList[i].ebookPrice} <!-- %=ebook.getEbookPrice()% --></td>
+			<td> ${ebookList[i].ebookDate}</td>
+			<td>${ebookList[i].ebookState}</td>
+			
+		</tr>
+		</c:forEach> <!--%	} }  %-->
+		
+	</table>
+	</DIV>
 	
 </body>
 </html>
