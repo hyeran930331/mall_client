@@ -26,7 +26,7 @@ public class Notice {
 		this.noticeContent = noticeContent;
 	}
 	public String getNoticeDate() {
-		return noticeDate;
+		return noticeDate.substring(0,11);
 	}
 	public void setNoticeDate(String noticeDate) {
 		this.noticeDate = noticeDate;

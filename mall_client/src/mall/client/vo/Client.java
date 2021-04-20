@@ -25,7 +25,7 @@ public class Client {
 		this.clientPw = clientPw;
 	}
 	public String getClientDate() {
-		return clientDate;
+		return clientDate.substring(0,11);
 	}
 	public void setClientDate(String clientDate) {
 		this.clientDate = clientDate;

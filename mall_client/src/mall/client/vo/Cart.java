@@ -27,7 +27,7 @@ public class Cart {
 		return cartDate;
 	}
 	public void setCartDate(String cartDate) {
-		this.cartDate = cartDate;
+		this.cartDate = cartDate.substring(0,11);
 	}
 	@Override
 	public String toString() {

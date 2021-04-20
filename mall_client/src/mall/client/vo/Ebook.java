@@ -75,7 +75,7 @@ public class Ebook {
 		this.ebookSummary = ebookSummary;
 	}
 	public String getEbookDate() {
-		return ebookDate;
+		return ebookDate.substring(0,11);
 	}
 	public void setEbookDate(String ebookDate) {
 		this.ebookDate = ebookDate;

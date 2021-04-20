@@ -26,7 +26,7 @@ public class Orders {
 		this.clientNo = clientNo;
 	}
 	public String getOrdersDate() {
-		return ordersDate;
+		return ordersDate.substring(0,11);
 	}
 	public void setOrdersDate(String ordersDate) {
 		this.ordersDate = ordersDate;

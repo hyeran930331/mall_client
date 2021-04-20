@@ -24,7 +24,7 @@ public class Category {
 		this.categoryWeight = categoryWeight;
 	}
 	public String getCategoryDate() {
-		return categoryDate;
+		return categoryDate.substring(0,11);
 	}
 	public void setCategoryDate(String categoryDate) {
 		this.categoryDate = categoryDate;

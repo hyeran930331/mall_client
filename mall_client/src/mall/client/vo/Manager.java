@@ -33,7 +33,7 @@ public class Manager {
 		this.managerName = managerName;
 	}
 	public String getManagerDate() {
-		return managerDate;
+		return managerDate.substring(0,11);
 	}
 	public void setManagerDate(String managerDate) {
 		this.managerDate = managerDate;

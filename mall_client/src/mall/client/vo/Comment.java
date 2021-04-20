@@ -32,7 +32,7 @@ public class Comment {
 		this.commentContent = commentContent;
 	}
 	public String getCommentDate() {
-		return commentDate;
+		return commentDate.substring(0,11);
 	}
 	public void setCommentDate(String commentDate) {
 		this.commentDate = commentDate;
