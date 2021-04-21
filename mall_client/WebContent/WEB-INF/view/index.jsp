@@ -22,7 +22,12 @@
 	<h1>index</h1>
 	
 	
+	<!-- 접속자 수 -->
 	
+	<div>
+		<div>오늘 접속자 수 : ${statsCount}</div>
+		<div>전체 접속자 수 : ${total }</div>
+	</div>
 
 	<!-- 구매 순서의 best ebook 상품5개 출력 -->
 	<h3>Best Ebook</h3>
@@ -30,17 +35,17 @@
 		<tr>
 			<!-- % List<Map<String, Object>> bestOrdersList = (List<Map<String, Object>>)(request.getAttribute("bestOrdersList")); % -->
 			<!-- % for(Map m : bestOrdersList) { % -->
-			<c:forEach var="iii" begin="0" step="1" end="${bestOrdersListSize-1}">
+			<c:forEach var="m" items="${bestOrdersList}">
 					<td>
 						<div><img src="${pageContext.request.contextPath}/img/default.jpg"></div>
 						<!-- EbookOneController - EbookDao.selectEbookOne() - ebookOne.jsp -->
 						<div>
-							<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${bestOrdersList[iii].ebookNo}">
-								${bestOrdersList[iii].ebookTitle} <!-- %=m.get("ebookTitle")%-->
+							<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${m.ebookNo}">
+								${m.ebookTitle} <!-- %=m.get("ebookTitle")%-->
 							</a>
 						</div>
 						
-						<div> ${bestOrdersList[iii].ebookPrice} <!--%=m.get("ebookPrice")%--> </div>
+						<div> ${m.ebookPrice} <!--%=m.get("ebookPrice")%--> </div>
 					</td>
 			</c:forEach> <!--% } % -->
 		</tr>
