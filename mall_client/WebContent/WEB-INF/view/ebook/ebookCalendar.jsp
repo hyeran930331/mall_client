@@ -22,9 +22,9 @@
 	<!-- n행 7열 -->
 	<div>
 		<a
-			href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${preYear}&currentMonth=${preMonth}">이전달</a>
+			href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${preYear}&currentMonth=${preMonth-1}">이전달</a>
 		<span>${currentYear}년</span> <span>${currentMonth}월</span> <a
-			href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${nextYear}&currentMonth=${nextMonth}">다음달</a>
+			href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${nextYear}&currentMonth=${nextMonth+1}">다음달</a>
 	</div>
 	
 	<table border="1">
